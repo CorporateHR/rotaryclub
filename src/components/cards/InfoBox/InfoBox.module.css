@@ -1,0 +1,31 @@
+.infoBox {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+  margin: var(--spacing-md) 0;
+}
+
+.info {
+  background-color: #dbeafe;
+  border-color: var(--color-info);
+  color: #1e40af;
+}
+
+.warning {
+  background-color: #fef3c7;
+  border-color: var(--color-warning);
+  color: #92400e;
+}
+
+.success {
+  background-color: #d1fae5;
+  border-color: var(--color-success);
+  color: #065f46;
+}
+
+.danger {
+  background-color: #fee2e2;
+  border-color: var(--color-danger);
+  color: #991b1b;
+}
+

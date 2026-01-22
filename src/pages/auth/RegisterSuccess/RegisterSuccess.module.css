@@ -1,0 +1,80 @@
+.successPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  padding-bottom: var(--spacing-2xl);
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.successCard {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-xl);
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.icon {
+  font-size: 4rem;
+  color: var(--color-success);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+.subtitle {
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-xl);
+}
+
+.accountCard {
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+}
+
+.accountDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+}
+
+.value {
+  color: var(--color-gray-900);
+}
+
+.infoBox {
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+  font-size: var(--font-size-sm);
+}
+
+.button {
+  width: 100%;
+}
+
