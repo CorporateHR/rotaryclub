@@ -17,7 +17,10 @@ const Header = ({ currentView = 'login' }) => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <h1 className={styles.logo}>ClubTracker</h1>
+        <div className={styles.logoContainer}>
+          <img src="/riemblem_c_large.gif.jpeg" alt="Rotary International" className={styles.logoImage} />
+          <h1 className={styles.logo}>Livermore Valley Rotary Club</h1>
+        </div>
         <nav className={styles.nav}>
           <button
             className={`${styles.navButton} ${currentView === 'login' ? styles.active : ''}`}
