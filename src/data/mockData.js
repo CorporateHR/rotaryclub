@@ -2,9 +2,18 @@ import { STORAGE_KEYS } from '../utils/constants';
 
 // Initialize mock data if not already present
 export const initializeMockData = () => {
-  // Check if data already exists
-  if (localStorage.getItem(STORAGE_KEYS.MEMBERS)) {
-    return; // Data already initialized
+  // Version check - increment this to force reinitialize
+  const DATA_VERSION = '2.0';
+  const currentVersion = localStorage.getItem('DATA_VERSION');
+  
+  // Check if data already exists and is current version
+  if (localStorage.getItem(STORAGE_KEYS.MEMBERS) && currentVersion === DATA_VERSION) {
+    return; // Data already initialized with current version
+  }
+  
+  // Clear old data if version mismatch
+  if (currentVersion !== DATA_VERSION) {
+    localStorage.clear();
   }
 
   // Members
@@ -104,8 +113,58 @@ export const initializeMockData = () => {
     return nextTuesday.toISOString();
   };
 
-  // Meetings - Next 4 Tuesdays at 8:15 AM - 9:15 AM PT
+  // Meetings - Past and upcoming Tuesdays at 8:15 AM - 9:15 AM PT
   const meetings = [
+    {
+      id: 'past-1',
+      title: 'Club Meeting - Past Week 1',
+      type: 'club',
+      date: getNextTuesday(-2),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:PAST1:ABC123XYZ',
+      checkIns: ['1', '2', '3', '4', '5'],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['2', '3'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['1'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['4', '5'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['6'] },
+      ],
+    },
+    {
+      id: 'past-2',
+      title: 'Club Meeting - Past Week 2',
+      type: 'club',
+      date: getNextTuesday(-1),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:PAST2:DEF456GHI',
+      checkIns: ['1', '2', '3', '6'],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['4', '5'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['2'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['1', '3'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['6'] },
+      ],
+    },
     {
       id: '1',
       title: 'Club Meeting - Week 1',
@@ -338,10 +397,19 @@ export const initializeMockData = () => {
 
   // Attendance records
   const attendance = [
-    { id: '1', memberId: '1', meetingId: '3', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: '2', memberId: '2', meetingId: '3', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: '3', memberId: '3', meetingId: '3', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
-    { id: '4', memberId: '4', meetingId: '3', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+    { id: '1', memberId: '1', meetingId: 'past-1', checkInTime: getNextTuesday(-2) },
+    { id: '2', memberId: '2', meetingId: 'past-1', checkInTime: getNextTuesday(-2) },
+    { id: '3', memberId: '3', meetingId: 'past-1', checkInTime: getNextTuesday(-2) },
+    { id: '4', memberId: '4', meetingId: 'past-1', checkInTime: getNextTuesday(-2) },
+    { id: '5', memberId: '5', meetingId: 'past-1', checkInTime: getNextTuesday(-2) },
+    { id: '6', memberId: '1', meetingId: 'past-2', checkInTime: getNextTuesday(-1) },
+    { id: '7', memberId: '2', meetingId: 'past-2', checkInTime: getNextTuesday(-1) },
+    { id: '8', memberId: '3', meetingId: 'past-2', checkInTime: getNextTuesday(-1) },
+    { id: '9', memberId: '6', meetingId: 'past-2', checkInTime: getNextTuesday(-1) },
+    { id: '10', memberId: '1', meetingId: '8', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+    { id: '11', memberId: '2', meetingId: '8', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+    { id: '12', memberId: '3', meetingId: '8', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+    { id: '13', memberId: '4', meetingId: '8', checkInTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
   ];
 
   // Volunteer hours
@@ -371,5 +439,6 @@ export const initializeMockData = () => {
   localStorage.setItem(STORAGE_KEYS.VOLUNTEER_EVENTS, JSON.stringify(volunteerEvents));
   localStorage.setItem(STORAGE_KEYS.ATTENDANCE, JSON.stringify(attendance));
   localStorage.setItem(STORAGE_KEYS.VOLUNTEER_HOURS, JSON.stringify(volunteerHours));
+  localStorage.setItem('DATA_VERSION', '2.0');
 };
 
