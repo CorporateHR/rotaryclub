@@ -93,15 +93,26 @@ export const initializeMockData = () => {
     role: 'admin',
   };
 
-  // Meetings
+  // Helper function to get next Tuesday dates
+  const getNextTuesday = (weeksFromNow = 0) => {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    // Calculate days until next Tuesday (2 = Tuesday)
+    const daysUntilNextTuesday = dayOfWeek === 2 ? 7 : (2 - dayOfWeek + 7) % 7;
+    const nextTuesday = new Date(now.getTime() + (daysUntilNextTuesday + weeksFromNow * 7) * 24 * 60 * 60 * 1000);
+    nextTuesday.setHours(8, 15, 0, 0);
+    return nextTuesday.toISOString();
+  };
+
+  // Meetings - Next 4 Tuesdays at 8:15 AM - 9:15 AM PT
   const meetings = [
     {
       id: '1',
-      title: 'Weekly Club Meeting',
+      title: 'Club Meeting - Week 1',
       type: 'club',
-      date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days from now
-      startTime: '18:00',
-      endTime: '19:30',
+      date: getNextTuesday(0),
+      startTime: '08:15',
+      endTime: '09:15',
       location: 'Community Center, Main Hall',
       expectedAttendance: 45,
       agenda: [
@@ -122,9 +133,134 @@ export const initializeMockData = () => {
     },
     {
       id: '2',
+      title: 'Club Meeting - Week 2',
+      type: 'club',
+      date: getNextTuesday(1),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:2:XYZ789ABC',
+      checkIns: [],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['2'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['1', '4'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['5'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['6', '3'] },
+      ],
+    },
+    {
+      id: '3',
+      title: 'Club Meeting - Week 3',
+      type: 'club',
+      date: getNextTuesday(2),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:3:DEF456GHI',
+      checkIns: [],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['3', '6'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['2'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['1', '4'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['5'] },
+      ],
+    },
+    {
+      id: '4',
+      title: 'Club Meeting - Week 4',
+      type: 'club',
+      date: getNextTuesday(3),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:4:GHI789JKL',
+      checkIns: [],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['1', '2'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['3'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['4', '6'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['5'] },
+      ],
+    },
+    {
+      id: '5',
+      title: 'Club Meeting - Week 5',
+      type: 'club',
+      date: getNextTuesday(4),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:5:JKL012MNO',
+      checkIns: [],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['4', '5'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['6'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['1', '2'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['3'] },
+      ],
+    },
+    {
+      id: '6',
+      title: 'Club Meeting - Week 6',
+      type: 'club',
+      date: getNextTuesday(5),
+      startTime: '08:15',
+      endTime: '09:15',
+      location: 'Community Center, Main Hall',
+      expectedAttendance: 45,
+      agenda: [
+        'Welcome and introductions',
+        'Treasurer report',
+        'Upcoming volunteer opportunities',
+        'New business',
+        'Adjournment',
+      ],
+      qrToken: 'MEETING:6:PQR345STU',
+      checkIns: [],
+      roles: [
+        { name: 'Speaker/Presenter', capacity: 2, volunteers: ['6', '1'] },
+        { name: 'Greeter', capacity: 2, volunteers: ['2', '3'] },
+        { name: 'Setup Team', capacity: 3, volunteers: ['4'] },
+        { name: 'Refreshments', capacity: 2, volunteers: ['5'] },
+      ],
+    },
+    {
+      id: '7',
       title: 'Board Meeting',
       type: 'board',
-      date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
+      date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       startTime: '17:00',
       endTime: '18:30',
       location: 'Club Office, Conference Room',
@@ -134,7 +270,7 @@ export const initializeMockData = () => {
         'Strategic planning',
         'Member applications',
       ],
-      qrToken: 'MEETING:2:XYZ789ABC',
+      qrToken: 'MEETING:7:MNO123PQR',
       checkIns: [],
       roles: [
         { name: 'Chairperson', capacity: 1, volunteers: ['2'] },
@@ -143,16 +279,16 @@ export const initializeMockData = () => {
       ],
     },
     {
-      id: '3',
+      id: '8',
       title: 'Monthly Social Gathering',
       type: 'social',
-      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
       startTime: '19:00',
       endTime: '21:00',
       location: 'Local Restaurant',
       expectedAttendance: 30,
       agenda: ['Socializing and networking'],
-      qrToken: 'MEETING:3:DEF456GHI',
+      qrToken: 'MEETING:8:STU456VWX',
       checkIns: ['1', '2', '3', '4'],
       roles: [
         { name: 'Event Coordinator', capacity: 1, volunteers: ['2'] },

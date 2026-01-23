@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { getVolunteerEventById, updateVolunteerEvent, updateInvitationStatus } from '../../../utils/dataManager';
+import { getVolunteerEventById, updateVolunteerEvent, updateInvitationStatus, getMembers } from '../../../utils/dataManager';
 import { format } from 'date-fns';
 import { FiCalendar, FiClock, FiMapPin, FiArrowLeft, FiCheck, FiX } from 'react-icons/fi';
 import Header from '../../../components/navigation/Header/Header';
@@ -16,6 +16,12 @@ const VolunteerDetail = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const event = getVolunteerEventById(id);
+  const members = getMembers();
+
+  const getMemberName = (memberId) => {
+    const member = members.find(m => m.id === memberId);
+    return member ? member.name : `Member ${memberId}`;
+  };
 
   if (!event) {
     return (
@@ -156,8 +162,7 @@ const VolunteerDetail = () => {
                   <div className={styles.volunteers}>
                     {role.volunteers.length > 0 ? (
                       role.volunteers.map((volId) => {
-                        // In real app, would fetch member name
-                        return <span key={volId} className={styles.volunteerName}>Member {volId}</span>;
+                        return <span key={volId} className={styles.volunteerName}>{getMemberName(volId)}</span>;
                       })
                     ) : (
                       <span className={styles.noVolunteers}>No volunteers yet</span>
