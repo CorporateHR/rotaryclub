@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { getMemberById, getMemberAttendance, getMemberTotalVolunteerHours } from '../../../utils/dataManager';
+import { getMemberBadgeProgress, getProgressPercentage } from '../../../data/badgeData';
 import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
 import Card from '../../../components/common/Card/Card';
@@ -23,6 +24,8 @@ const Profile = () => {
   const attendancePercent = Math.min(100, (attendance.length / 16) * 100);
   const volunteerHours = getMemberTotalVolunteerHours(member.id);
   const eventsParticipated = 7; // Simplified
+  const badgeProgress = getMemberBadgeProgress(member.id);
+  const badgePercentage = getProgressPercentage(member.id);
 
   return (
     <div className={styles.profilePage}>
@@ -48,6 +51,38 @@ const Profile = () => {
               <strong>Address:</strong> {member.address}
             </div>
           </div>
+        </Card>
+
+        <Card className={styles.badgeCard}>
+          <h2 className={styles.cardTitle}>Badge Status</h2>
+          <div className={styles.badgeStatus}>
+            <div className={styles.badgeIconWrapper} style={{ backgroundColor: badgeProgress.badgeColor }}>
+              <span className={styles.badgeEmoji}>
+                {badgeProgress.currentBadge === 'red' ? '🔴' : '🔵'}
+              </span>
+            </div>
+            <div className={styles.badgeInfo}>
+              <h3 className={styles.badgeTitle}>
+                {badgeProgress.currentBadge === 'red' ? 'Red Badge' : 'Blue Badge'}
+              </h3>
+              <p className={styles.badgeDescription}>
+                {badgeProgress.currentBadge === 'red' 
+                  ? `${badgePercentage}% complete - Keep going!`
+                  : 'Congratulations! Badge earned'}
+              </p>
+              {badgeProgress.currentBadge === 'red' && (
+                <ProgressBar value={badgePercentage} />
+              )}
+            </div>
+          </div>
+          <Button 
+            variant="primary" 
+            size="sm"
+            className={styles.viewBadgeButton}
+            onClick={() => navigate('/member/badge-progress')}
+          >
+            View Progress
+          </Button>
         </Card>
 
         <Card className={styles.activityCard}>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getMeetingById, updateMeeting } from '../../../utils/dataManager';
+import { getMeetingById, updateMeeting, getMembers } from '../../../utils/dataManager';
 import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
 import Input from '../../../components/common/Input/Input';
@@ -13,6 +13,7 @@ const EditMeeting = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const meeting = getMeetingById(id);
+  const [members, setMembers] = useState([]);
   
   const [formData, setFormData] = useState({
     type: 'club',
@@ -23,9 +24,18 @@ const EditMeeting = () => {
     location: '',
     expectedAttendance: '',
     agenda: '',
+    meetingRoles: {
+      president: '',
+      greeter: '',
+      jokeOfTheDay: '',
+      thoughtOfTheDay: '',
+    },
   });
 
   useEffect(() => {
+    const allMembers = getMembers();
+    setMembers(allMembers);
+
     if (meeting) {
       const meetingDate = new Date(meeting.date);
       setFormData({
@@ -37,6 +47,12 @@ const EditMeeting = () => {
         location: meeting.location || '',
         expectedAttendance: meeting.expectedAttendance?.toString() || '',
         agenda: meeting.agenda?.join('\n') || '',
+        meetingRoles: {
+          president: meeting.meetingRoles?.president || '',
+          greeter: meeting.meetingRoles?.greeter || '',
+          jokeOfTheDay: meeting.meetingRoles?.jokeOfTheDay || '',
+          thoughtOfTheDay: meeting.meetingRoles?.thoughtOfTheDay || '',
+        },
       });
     }
   }, [meeting]);
@@ -60,6 +76,16 @@ const EditMeeting = () => {
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleRoleChange = (role, value) => {
+    setFormData(prev => ({
+      ...prev,
+      meetingRoles: {
+        ...prev.meetingRoles,
+        [role]: value,
+      },
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -144,6 +170,50 @@ const EditMeeting = () => {
             placeholder="Welcome and introductions&#10;Treasurer report&#10;New business"
             rows={5}
           />
+
+          <div className={styles.rolesSection}>
+            <h3 className={styles.rolesTitle}>Meeting Roles</h3>
+            
+            <Select
+              label="President"
+              value={formData.meetingRoles.president}
+              onChange={(e) => handleRoleChange('president', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Greeter"
+              value={formData.meetingRoles.greeter}
+              onChange={(e) => handleRoleChange('greeter', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Joke of the Day"
+              value={formData.meetingRoles.jokeOfTheDay}
+              onChange={(e) => handleRoleChange('jokeOfTheDay', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Thought of the Day"
+              value={formData.meetingRoles.thoughtOfTheDay}
+              onChange={(e) => handleRoleChange('thoughtOfTheDay', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+          </div>
 
           <div className={styles.actions}>
             <Button variant="secondary" type="button" onClick={() => navigate('/admin/meetings')}>

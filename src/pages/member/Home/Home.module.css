@@ -10,11 +10,70 @@
   padding: var(--spacing-lg) var(--spacing-md);
 }
 
+.welcomeSection {
+  margin-bottom: var(--spacing-xl);
+}
+
 .welcome {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-900);
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.badgeBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-md);
+}
+
+.badgeBanner:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.badgeIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.badgeInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.badgeTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-900);
+}
+
+.badgeProgress {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}
+
+.badgeArrow {
+  font-size: 1.5rem;
+  color: var(--color-gray-400);
+  flex-shrink: 0;
 }
 
 .statsGrid {

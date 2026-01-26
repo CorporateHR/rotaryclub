@@ -35,7 +35,9 @@
 }
 
 .infoCard,
-.agendaCard {
+.agendaCard,
+.rolesCard,
+.locationCard {
   margin-bottom: var(--spacing-lg);
 }
 
@@ -105,5 +107,104 @@
 
 .scanButton {
   width: 100%;
+}
+
+.rolesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.roleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.roleItem:last-child {
+  border-bottom: none;
+}
+
+.roleLabel {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-700);
+  font-size: var(--font-size-base);
+}
+
+.roleMember {
+  color: var(--color-gray-900);
+  font-size: var(--font-size-base);
+}
+
+.locationWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.locationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.locationText {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  flex: 1;
+}
+
+.locationIcon {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.openMapsButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  white-space: nowrap;
+}
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+  background-color: var(--color-gray-100);
+}
+
+.mapIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .locationHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .openMapsButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .mapContainer {
+    height: 250px;
+  }
 }
 

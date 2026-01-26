@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { getVolunteerEventById, updateVolunteerEvent, updateInvitationStatus, getMembers } from '../../../utils/dataManager';
+import { getVolunteerEventById, updateVolunteerEvent, updateInvitationStatus, getMembers, getMemberById } from '../../../utils/dataManager';
 import { format } from 'date-fns';
 import { FiCalendar, FiClock, FiMapPin, FiArrowLeft, FiCheck, FiX } from 'react-icons/fi';
 import Header from '../../../components/navigation/Header/Header';
@@ -120,6 +120,23 @@ const VolunteerDetail = () => {
           <p>{event.description}</p>
         </Card>
 
+        {event.champion && (
+          <Card className={styles.championCard}>
+            <h2 className={styles.cardTitle}>Event Champion</h2>
+            <div className={styles.championInfo}>
+              <div className={styles.championDetails}>
+                <span className={styles.championLabel}>Event Leader:</span>
+                <span className={styles.championName}>
+                  {getMemberById(event.champion)?.name || 'Not assigned'}
+                </span>
+              </div>
+              <p className={styles.championDescription}>
+                The Event Champion is the lead organizer for this volunteer event.
+              </p>
+            </div>
+          </Card>
+        )}
+
         {isInvited && invitationStatus === 'pending' && (
           <InfoBox type="info" className={styles.invitationBox}>
             <strong>You've been invited to this event!</strong>
@@ -154,7 +171,7 @@ const VolunteerDetail = () => {
 
         {event.roles && event.roles.length > 0 && (
           <Card className={styles.volunteersCard}>
-            <h2 className={styles.cardTitle}>Other Volunteers</h2>
+            <h2 className={styles.cardTitle}>Volunteer Roles & Sign-ups</h2>
             <div className={styles.volunteersList}>
               {event.roles.map((role) => (
                 <div key={role.name} className={styles.roleSection}>

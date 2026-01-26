@@ -26,6 +26,8 @@ import EditProfile from './pages/member/EditProfile/EditProfile';
 import MemberDetail from './pages/member/MemberDetail/MemberDetail';
 import AddGuest from './pages/member/AddGuest/AddGuest';
 import GuestAdded from './pages/member/GuestAdded/GuestAdded';
+import Donate from './pages/member/Donate/Donate';
+import BadgeProgress from './pages/member/BadgeProgress/BadgeProgress';
 
 // Admin pages
 import AdminHome from './pages/admin/Home/Home';
@@ -210,6 +212,22 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <GuestAdded />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/member/donate"
+        element={
+          <ProtectedRoute>
+            <Donate />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/member/badge-progress"
+        element={
+          <ProtectedRoute>
+            <BadgeProgress />
           </ProtectedRoute>
         }
       />

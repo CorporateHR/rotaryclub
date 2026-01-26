@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addMeeting } from '../../../utils/dataManager';
+import { addMeeting, getMembers } from '../../../utils/dataManager';
 import { generateMeetingQR } from '../../../utils/qrCode';
 import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
@@ -12,6 +12,7 @@ import styles from './CreateMeeting.module.css';
 
 const CreateMeeting = () => {
   const navigate = useNavigate();
+  const [members, setMembers] = useState([]);
   const [formData, setFormData] = useState({
     type: 'club',
     title: '',
@@ -21,7 +22,18 @@ const CreateMeeting = () => {
     location: '',
     expectedAttendance: '',
     agenda: '',
+    meetingRoles: {
+      president: '',
+      greeter: '',
+      jokeOfTheDay: '',
+      thoughtOfTheDay: '',
+    },
   });
+
+  useEffect(() => {
+    const allMembers = getMembers();
+    setMembers(allMembers);
+  }, []);
 
   const meetingTypes = [
     { value: 'club', label: 'Club Meeting' },
@@ -33,6 +45,16 @@ const CreateMeeting = () => {
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleRoleChange = (role, value) => {
+    setFormData(prev => ({
+      ...prev,
+      meetingRoles: {
+        ...prev.meetingRoles,
+        [role]: value,
+      },
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -120,6 +142,50 @@ const CreateMeeting = () => {
             placeholder="Welcome and introductions&#10;Treasurer report&#10;New business"
             rows={5}
           />
+
+          <div className={styles.rolesSection}>
+            <h3 className={styles.rolesTitle}>Meeting Roles</h3>
+            
+            <Select
+              label="President"
+              value={formData.meetingRoles.president}
+              onChange={(e) => handleRoleChange('president', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Greeter"
+              value={formData.meetingRoles.greeter}
+              onChange={(e) => handleRoleChange('greeter', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Joke of the Day"
+              value={formData.meetingRoles.jokeOfTheDay}
+              onChange={(e) => handleRoleChange('jokeOfTheDay', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+
+            <Select
+              label="Thought of the Day"
+              value={formData.meetingRoles.thoughtOfTheDay}
+              onChange={(e) => handleRoleChange('thoughtOfTheDay', e.target.value)}
+              options={[
+                { value: '', label: 'Select Member' },
+                ...members.map(m => ({ value: m.id, label: m.name }))
+              ]}
+            />
+          </div>
 
           <div className={styles.actions}>
             <Button variant="secondary" type="button" onClick={() => navigate('/admin/meetings')}>

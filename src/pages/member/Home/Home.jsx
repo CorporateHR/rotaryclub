@@ -7,8 +7,9 @@ import {
   getMemberAttendance, 
   getMemberTotalVolunteerHours 
 } from '../../../utils/dataManager';
+import { getMemberBadgeProgress, getProgressPercentage } from '../../../data/badgeData';
 import { format } from 'date-fns';
-import { FiCalendar, FiClock, FiMapPin, FiGrid, FiUsers, FiHeart, FiUser } from 'react-icons/fi';
+import { FiCalendar, FiClock, FiMapPin, FiGrid, FiUsers, FiHeart, FiUser, FiDollarSign, FiAward } from 'react-icons/fi';
 import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
 import StatCard from '../../../components/cards/StatCard/StatCard';
@@ -25,6 +26,8 @@ const Home = () => {
   });
   const [nextMeeting, setNextMeeting] = useState(null);
   const [upcomingVolunteer, setUpcomingVolunteer] = useState(null);
+  const [badgeProgress, setBadgeProgress] = useState(null);
+  const [badgePercentage, setBadgePercentage] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -51,6 +54,12 @@ const Home = () => {
       .filter(e => new Date(e.date) > new Date())
       .sort((a, b) => new Date(a.date) - new Date(b.date))[0];
     setUpcomingVolunteer(upcomingEvent);
+
+    // Get badge progress
+    const progress = getMemberBadgeProgress(user.id);
+    const percentage = getProgressPercentage(user.id);
+    setBadgeProgress(progress);
+    setBadgePercentage(percentage);
   }, [user]);
 
   if (!user) {
@@ -61,7 +70,27 @@ const Home = () => {
     <div className={styles.homePage}>
       <Header currentView="member" />
       <div className={styles.container}>
-        <h1 className={styles.welcome}>Welcome back, {user.name}!</h1>
+        <div className={styles.welcomeSection}>
+          <h1 className={styles.welcome}>Welcome back, {user.name}!</h1>
+          {badgeProgress && (
+            <div className={styles.badgeBanner} onClick={() => navigate('/member/badge-progress')}>
+              <div className={styles.badgeIcon} style={{ backgroundColor: badgeProgress.badgeColor }}>
+                {badgeProgress.currentBadge === 'red' ? '🔴' : '🔵'}
+              </div>
+              <div className={styles.badgeInfo}>
+                <span className={styles.badgeTitle}>
+                  {badgeProgress.currentBadge === 'red' ? 'Red Badge' : 'Blue Badge'}
+                </span>
+                <span className={styles.badgeProgress}>
+                  {badgeProgress.currentBadge === 'red' 
+                    ? `${badgePercentage}% complete`
+                    : 'Completed!'}
+                </span>
+              </div>
+              <FiAward className={styles.badgeArrow} />
+            </div>
+          )}
+        </div>
 
         <div className={styles.statsGrid}>
           <StatCard
@@ -158,6 +187,13 @@ const Home = () => {
             >
               <FiUsers className={styles.actionIcon} />
               <span>Member Directory</span>
+            </button>
+            <button
+              className={styles.actionButton}
+              onClick={() => navigate('/member/donate')}
+            >
+              <FiDollarSign className={styles.actionIcon} />
+              <span>Donate</span>
             </button>
           </div>
         </div>

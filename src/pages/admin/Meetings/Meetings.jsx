@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMeetings } from '../../../utils/dataManager';
+import { getMeetings, getMemberById } from '../../../utils/dataManager';
 import { format } from 'date-fns';
 import { FiCalendar, FiClock, FiMapPin, FiUsers, FiEdit, FiGrid } from 'react-icons/fi';
 import Header from '../../../components/navigation/Header/Header';
@@ -106,6 +106,45 @@ const AdminMeetings = () => {
                     <span>{checkInCount} / {meeting.expectedAttendance} checked in</span>
                   </div>
                 </div>
+                {meeting.meetingRoles && (
+                  <div className={styles.meetingRolesSection}>
+                    <h4 className={styles.rolesTitle}>Meeting Roles:</h4>
+                    <div className={styles.meetingRolesList}>
+                      {meeting.meetingRoles.president && (
+                        <div className={styles.meetingRoleItem}>
+                          <span className={styles.meetingRoleLabel}>President:</span>
+                          <span className={styles.meetingRoleMember}>
+                            {getMemberById(meeting.meetingRoles.president)?.name || 'Not assigned'}
+                          </span>
+                        </div>
+                      )}
+                      {meeting.meetingRoles.greeter && (
+                        <div className={styles.meetingRoleItem}>
+                          <span className={styles.meetingRoleLabel}>Greeter:</span>
+                          <span className={styles.meetingRoleMember}>
+                            {getMemberById(meeting.meetingRoles.greeter)?.name || 'Not assigned'}
+                          </span>
+                        </div>
+                      )}
+                      {meeting.meetingRoles.jokeOfTheDay && (
+                        <div className={styles.meetingRoleItem}>
+                          <span className={styles.meetingRoleLabel}>Joke of the Day:</span>
+                          <span className={styles.meetingRoleMember}>
+                            {getMemberById(meeting.meetingRoles.jokeOfTheDay)?.name || 'Not assigned'}
+                          </span>
+                        </div>
+                      )}
+                      {meeting.meetingRoles.thoughtOfTheDay && (
+                        <div className={styles.meetingRoleItem}>
+                          <span className={styles.meetingRoleLabel}>Thought of the Day:</span>
+                          <span className={styles.meetingRoleMember}>
+                            {getMemberById(meeting.meetingRoles.thoughtOfTheDay)?.name || 'Not assigned'}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
                 {meeting.roles && meeting.roles.length > 0 && (
                   <div className={styles.rolesBreakdown}>
                     <h4 className={styles.rolesTitle}>Activities:</h4>

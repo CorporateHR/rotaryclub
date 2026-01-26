@@ -133,6 +133,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:PAST1:ABC123XYZ',
       checkIns: ['1', '2', '3', '4', '5'],
+      meetingRoles: {
+        president: '2',
+        greeter: '1',
+        jokeOfTheDay: '3',
+        thoughtOfTheDay: '4',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['2', '3'] },
         { name: 'Greeter', capacity: 2, volunteers: ['1'] },
@@ -158,6 +164,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:PAST2:DEF456GHI',
       checkIns: ['1', '2', '3', '6'],
+      meetingRoles: {
+        president: '2',
+        greeter: '6',
+        jokeOfTheDay: '1',
+        thoughtOfTheDay: '3',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['4', '5'] },
         { name: 'Greeter', capacity: 2, volunteers: ['2'] },
@@ -183,6 +195,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:1:ABC123XYZ',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '1',
+        jokeOfTheDay: '5',
+        thoughtOfTheDay: '6',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['2', '3'] },
         { name: 'Greeter', capacity: 2, volunteers: ['1'] },
@@ -208,6 +226,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:2:XYZ789ABC',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '4',
+        jokeOfTheDay: '3',
+        thoughtOfTheDay: '5',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['2'] },
         { name: 'Greeter', capacity: 2, volunteers: ['1', '4'] },
@@ -233,6 +257,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:3:DEF456GHI',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '1',
+        jokeOfTheDay: '4',
+        thoughtOfTheDay: '6',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['3', '6'] },
         { name: 'Greeter', capacity: 2, volunteers: ['2'] },
@@ -258,6 +288,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:4:GHI789JKL',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '3',
+        jokeOfTheDay: '5',
+        thoughtOfTheDay: '1',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['1', '2'] },
         { name: 'Greeter', capacity: 2, volunteers: ['3'] },
@@ -283,6 +319,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:5:JKL012MNO',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '6',
+        jokeOfTheDay: '1',
+        thoughtOfTheDay: '3',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['4', '5'] },
         { name: 'Greeter', capacity: 2, volunteers: ['6'] },
@@ -308,6 +350,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:6:PQR345STU',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '4',
+        jokeOfTheDay: '6',
+        thoughtOfTheDay: '5',
+      },
       roles: [
         { name: 'Speaker/Presenter', capacity: 2, volunteers: ['6', '1'] },
         { name: 'Greeter', capacity: 2, volunteers: ['2', '3'] },
@@ -331,6 +379,12 @@ export const initializeMockData = () => {
       ],
       qrToken: 'MEETING:7:MNO123PQR',
       checkIns: [],
+      meetingRoles: {
+        president: '2',
+        greeter: '3',
+        jokeOfTheDay: '6',
+        thoughtOfTheDay: '1',
+      },
       roles: [
         { name: 'Chairperson', capacity: 1, volunteers: ['2'] },
         { name: 'Secretary/Minutes', capacity: 1, volunteers: ['3'] },
@@ -349,6 +403,12 @@ export const initializeMockData = () => {
       agenda: ['Socializing and networking'],
       qrToken: 'MEETING:8:STU456VWX',
       checkIns: ['1', '2', '3', '4'],
+      meetingRoles: {
+        president: '2',
+        greeter: '1',
+        jokeOfTheDay: '3',
+        thoughtOfTheDay: '4',
+      },
       roles: [
         { name: 'Event Coordinator', capacity: 1, volunteers: ['2'] },
         { name: 'Venue Liaison', capacity: 1, volunteers: ['1'] },
@@ -367,6 +427,7 @@ export const initializeMockData = () => {
       endTime: '15:00',
       location: 'Community Food Bank, 123 Food St',
       maxVolunteers: 20,
+      champion: '2',
       roles: [
         { name: 'Sorting & Packing', capacity: 6, volunteers: ['1', '2', '3', '4', '5'] },
         { name: 'Distribution', capacity: 5, volunteers: ['6', '1', '2', '3'] },
@@ -385,6 +446,7 @@ export const initializeMockData = () => {
       endTime: '12:00',
       location: 'Riverside Park, Main Entrance',
       maxVolunteers: 20,
+      champion: '3',
       roles: [
         { name: 'Litter Collection', capacity: 8, volunteers: ['1', '2'] },
         { name: 'Trail Trimming', capacity: 6, volunteers: ['3'] },

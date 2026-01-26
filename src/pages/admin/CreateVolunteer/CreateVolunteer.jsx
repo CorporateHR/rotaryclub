@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addVolunteerEvent, getMembers } from '../../../utils/dataManager';
 import { generateVolunteerCheckInQR as genCheckIn, generateVolunteerCheckOutQR as genCheckOut } from '../../../utils/qrCode';
@@ -6,6 +6,7 @@ import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
 import Input from '../../../components/common/Input/Input';
 import Textarea from '../../../components/common/Textarea/Textarea';
+import Select from '../../../components/common/Select/Select';
 import Button from '../../../components/common/Button/Button';
 import Card from '../../../components/common/Card/Card';
 import Avatar from '../../../components/common/Avatar/Avatar';
@@ -23,11 +24,17 @@ const CreateVolunteer = () => {
     endTime: '',
     location: '',
     maxVolunteers: '',
+    champion: '',
     roles: '',
   });
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const members = getMembers();
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    const allMembers = getMembers();
+    setMembers(allMembers);
+  }, []);
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -152,6 +159,16 @@ const CreateVolunteer = () => {
             onChange={(e) => handleChange('maxVolunteers', e.target.value)}
             placeholder="20"
             required
+          />
+
+          <Select
+            label="Event Champion (Leader)"
+            value={formData.champion}
+            onChange={(e) => handleChange('champion', e.target.value)}
+            options={[
+              { value: '', label: 'Select Champion' },
+              ...members.map(m => ({ value: m.id, label: m.name }))
+            ]}
           />
 
           <Textarea

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getVolunteerEventById, updateVolunteerEvent } from '../../../utils/dataManager';
+import { getVolunteerEventById, updateVolunteerEvent, getMembers } from '../../../utils/dataManager';
 import Header from '../../../components/navigation/Header/Header';
 import BottomNav from '../../../components/navigation/BottomNav/BottomNav';
 import Input from '../../../components/common/Input/Input';
 import Textarea from '../../../components/common/Textarea/Textarea';
+import Select from '../../../components/common/Select/Select';
 import Button from '../../../components/common/Button/Button';
 import styles from './EditVolunteer.module.css';
 
@@ -12,6 +13,7 @@ const EditVolunteer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const event = getVolunteerEventById(id);
+  const [members, setMembers] = useState([]);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -21,10 +23,14 @@ const EditVolunteer = () => {
     endTime: '',
     location: '',
     maxVolunteers: '',
+    champion: '',
     roles: '',
   });
 
   useEffect(() => {
+    const allMembers = getMembers();
+    setMembers(allMembers);
+
     if (event) {
       const eventDate = new Date(event.date);
       setFormData({
@@ -35,6 +41,7 @@ const EditVolunteer = () => {
         endTime: event.endTime || '',
         location: event.location || '',
         maxVolunteers: event.maxVolunteers?.toString() || '',
+        champion: event.champion || '',
         roles: event.roles?.map(r => r.name).join('\n') || '',
       });
     }
@@ -145,6 +152,16 @@ const EditVolunteer = () => {
             onChange={(e) => handleChange('maxVolunteers', e.target.value)}
             placeholder="20"
             required
+          />
+
+          <Select
+            label="Event Champion (Leader)"
+            value={formData.champion}
+            onChange={(e) => handleChange('champion', e.target.value)}
+            options={[
+              { value: '', label: 'Select Champion' },
+              ...members.map(m => ({ value: m.id, label: m.name }))
+            ]}
           />
 
           <Textarea

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getVolunteerEventById, getMembers, inviteMemberToEvent, cancelInvitation, updateVolunteerEvent } from '../../../utils/dataManager';
+import { getVolunteerEventById, getMembers, getMemberById, inviteMemberToEvent, cancelInvitation, updateVolunteerEvent } from '../../../utils/dataManager';
 import { format } from 'date-fns';
 import { FiCalendar, FiClock, FiMapPin, FiUsers, FiArrowLeft, FiPhone, FiMail, FiDownload, FiUserPlus, FiX, FiCheck, FiXCircle, FiClock as FiClockIcon } from 'react-icons/fi';
 import Header from '../../../components/navigation/Header/Header';
@@ -138,6 +138,23 @@ const AdminVolunteerDetail = () => {
           <Card className={styles.descriptionCard}>
             <h2 className={styles.cardTitle}>Description</h2>
             <p>{event.description}</p>
+          </Card>
+        )}
+
+        {event.champion && (
+          <Card className={styles.championCard}>
+            <h2 className={styles.cardTitle}>Event Champion (Leader)</h2>
+            <div className={styles.championInfo}>
+              <div className={styles.championDetails}>
+                <span className={styles.championLabel}>Event Leader:</span>
+                <span className={styles.championName}>
+                  {getMemberById(event.champion)?.name || 'Not assigned'}
+                </span>
+              </div>
+              <p className={styles.championDescription}>
+                The Event Champion is the lead organizer responsible for coordinating this volunteer event.
+              </p>
+            </div>
           </Card>
         )}
 
