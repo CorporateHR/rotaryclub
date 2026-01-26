@@ -3,7 +3,7 @@ import { STORAGE_KEYS } from '../utils/constants';
 // Initialize mock data if not already present
 export const initializeMockData = () => {
   // Version check - increment this to force reinitialize
-  const DATA_VERSION = '2.0';
+  const DATA_VERSION = '3.0';
   const currentVersion = localStorage.getItem('DATA_VERSION');
   
   // Check if data already exists and is current version
